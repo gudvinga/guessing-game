@@ -2,38 +2,38 @@ class GuessingGame {
     constructor(value) {
         this.value = value;
         this.maxRange = null;
-        this.minRage = null;
+        this.minRange = null;
+        this.number = null;
+        
     }
 
     setRange(min, max) {
         this.maxRange = max;
-        this.minRage = min;
+        this.minRange = min;
     }
 
     guess() {
-        this.number = Math.floor(Math.random()*(this.maxRange - this.minRage) + this.minRage);
-        return this.number;
+        this.number = Math.floor(Math.random()*(this.maxRange - this.minRange) + this.minRange);
+        if (this.number < this.value) this.lower();
+        else if (this.number > this.value) this.greater();
+        else return this.number;
     }
 
     lower() {
-        if (this.guess() > this.value) {
-            this.maxRange = this.guess();
-            this.greater();
-        }
-        if (this.number == this.value) return this.number;
+        this.minRange = this.number;
+        console.log('this.number = ' + this.number);
+        console.log('this.value = ' + this.value);
+        this.guess();
     }
 
     greater() {
-        if (this.number < this.value) {
-            this.minRange = this.number;
-            this.lower();
-        }
-        if (this.number == this.value) return this.number;
+        this.maxRange = this.number;
+        this.guess();
     }
 }
 
-var game = new GuessingGame(15);
+var game = new GuessingGame(100);
 game.setRange(18,200);
 game.guess();
 
-console.log(game.lower());
+console.log(game.guess());
